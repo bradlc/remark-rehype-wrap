@@ -84,7 +84,7 @@ function wrap(tree, opts) {
   return tree
 }
 
-export default function remarkWrap(...rules) {
+export function remarkRehypeWrap(...rules) {
   return (tree) => {
     for (let rule of rules) {
       if (!rule.end) {

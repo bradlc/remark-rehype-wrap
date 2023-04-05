@@ -1,6 +1,6 @@
 import { test } from 'uvu'
 import * as assert from 'uvu/assert'
-import remarkWrap from './index.js'
+import { remarkRehypeWrap } from './index.js'
 import { remark } from 'remark'
 import { rehype } from 'rehype'
 import remarkMdx from 'remark-mdx'
@@ -9,7 +9,7 @@ async function processMdx(string, ...options) {
   return String(
     await remark()
       .use(remarkMdx)
-      .use(remarkWrap, ...options)
+      .use(remarkRehypeWrap, ...options)
       .process(string)
   ).trim()
 }
@@ -18,7 +18,7 @@ async function processRehype(string, ...options) {
   return String(
     await rehype()
       .data('settings', { fragment: true })
-      .use(remarkWrap, ...options)
+      .use(remarkRehypeWrap, ...options)
       .process(string)
   ).trim()
 }
