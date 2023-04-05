@@ -17,7 +17,7 @@ await remark().use(remarkRehypeWrap).process('<p>Hello, world!</p>')
 
 ## Usage
 
-See [test.js](/) for usage examples.
+See [test.js](https://github.com/bradlc/remark-rehype-wrap/blob/main/test.js) for usage examples.
 
 ## Options
 
@@ -43,4 +43,4 @@ If `end` is not defined then it is set to the same as `start`.
 
 ### `options.transform` (optional)
 
-The `transform` function is passed each new wrapper node and should return a node. See [test.js](/) for an example.
+The `transform` function is passed each new wrapper node and should return a node. See [test.js](https://github.com/bradlc/remark-rehype-wrap/blob/main/test.js#L76-L89) for an example.
