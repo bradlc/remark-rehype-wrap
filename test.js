@@ -88,4 +88,19 @@ test('transform', async () => {
   assert.equal(processed, ['<div id="intro"><h1>Hello world</h1></div>'].join('\n\n'))
 })
 
+test('no recursion', async () => {
+  let processed = await processRehype(
+    ['<p>Hello world</p>', '<p>Lorem ipsum</p>', '<div></div>'].join('\n\n'),
+    {
+      node: { type: 'element', tagName: 'div' },
+      start: 'element[tagName=p]',
+      end: 'element[tagName=div]',
+    }
+  )
+  assert.equal(
+    processed,
+    ['<div><p>Hello world</p>', '<p>Lorem ipsum</p>', '</div><div></div>'].join('\n\n')
+  )
+})
+
 test.run()

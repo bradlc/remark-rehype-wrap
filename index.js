@@ -24,7 +24,7 @@ function wrap(tree, opts) {
       if (start.inclusive) {
         current.push(node)
       } else {
-        newChildren.push(wrap(node, opts))
+        newChildren.push(node)
       }
       inside = true
       startNodes.splice(startNodes.indexOf(node), 1)
@@ -33,28 +33,23 @@ function wrap(tree, opts) {
         current.push(node)
       }
       newChildren.push(
-        transform(
-          wrap(
-            {
-              ...newNode,
-              properties: takeProps(current, props, newNode),
-              children: current,
-            },
-            opts
-          )
-        )
+        transform({
+          ...newNode,
+          properties: takeProps(current, props, newNode),
+          children: current,
+        })
       )
       if (!end.inclusive && startNodes.includes(node)) {
         if (start.inclusive) {
           current = [node]
         } else {
           current = []
-          newChildren.push(wrap(node, opts))
+          newChildren.push(node)
         }
         startNodes.splice(startNodes.indexOf(node), 1)
       } else {
         if (!end.inclusive) {
-          newChildren.push(wrap(node, opts))
+          newChildren.push(node)
         }
         current = []
         inside = false
@@ -68,16 +63,11 @@ function wrap(tree, opts) {
   }
   if (current.length) {
     newChildren.push(
-      transform(
-        wrap(
-          {
-            ...newNode,
-            properties: takeProps(current, props, newNode),
-            children: current,
-          },
-          opts
-        )
-      )
+      transform({
+        ...newNode,
+        properties: takeProps(current, props, newNode),
+        children: current,
+      })
     )
   }
   tree.children = newChildren
