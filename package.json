@@ -1,6 +1,6 @@
 {
   "name": "remark-rehype-wrap",
-  "version": "0.0.3",
+  "version": "0.0.4",
   "description": "Wrap `remark` or `rehype` subtrees in a new container node",
   "author": "Brad Cornes",
   "license": "MIT",
