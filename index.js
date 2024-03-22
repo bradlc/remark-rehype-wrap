@@ -49,7 +49,7 @@ function wrap(tree, opts) {
         startNodes.splice(startNodes.indexOf(node), 1)
       } else {
         if (!end.inclusive) {
-          newChildren.push(node)
+          newChildren.push(wrap(node, opts))
         }
         current = []
         inside = false
