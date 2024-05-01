@@ -30,14 +30,26 @@ A new node to use as the wrapper. e.g. `{ type: 'element', tagName: 'div' }`
 Either:
 
 - `string`: A node selector passed to [`unist-util-select`](https://github.com/syntax-tree/unist-util-select). Nodes matching the selector create a new wrapper section.
-- `{ selector: string, inclusive?: boolean }`: A node selector, with optional `inclusive` option to specify whether the start node should be included in the new wrapper section (`true`, default) or not (`false`).
+- `{ selector: string, inclusive?: boolean, exclude?: string }`
+
+  | Property    | Description                                                                                                                                                                                         |
+  | ----------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+  | `selector`  | A node selector passed to [`unist-util-select`](https://github.com/syntax-tree/unist-util-select). Nodes matching the selector create a new wrapper section.                                        |
+  | `inclusive` | Whether the start node should be included in the new wrapper section (`true`, default) or not (`false`).                                                                                            |
+  | `exclude`   | A node selector passed to [`unist-util-select`](https://github.com/syntax-tree/unist-util-select). Nodes matching the selector will not create a new wrapper section, even if they match `selector` |
 
 ### `options.end` (optional)
 
 Either:
 
 - `string`: A node selector passed to [`unist-util-select`](https://github.com/syntax-tree/unist-util-select). Nodes matching the selector end the current wrapper section.
-- `{ selector: string, inclusive?: boolean }`: A node selector, with optional `inclusive` option to specify whether the end node should be included in the current wrapper section (`true`) or not (`false`, default).
+- `{ selector: string, inclusive?: boolean, exclude?: string }`
+
+  | Property    | Description                                                                                                                                                                                            |
+  | ----------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
+  | `selector`  | A node selector passed to [`unist-util-select`](https://github.com/syntax-tree/unist-util-select). Nodes matching the selector end the current wrapper section.                                        |
+  | `inclusive` | Whether the end node should be included in the current wrapper section (`true`) or not (`false`, default).                                                                                             |
+  | `exclude`   | A node selector passed to [`unist-util-select`](https://github.com/syntax-tree/unist-util-select). Nodes matching the selector will not end the current wrapper section, even if they match `selector` |
 
 If `end` is not defined then it is set to the same as `start`.
 

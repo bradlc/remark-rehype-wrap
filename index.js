@@ -15,12 +15,22 @@ function takeProps(nodes, selector, newNode) {
 }
 
 function wrap(tree, opts) {
-  let { start, end, startNodes, endNodes, newNode, props, transform = (n) => n } = opts
+  let {
+    start,
+    end,
+    startNodes,
+    startExcludedNodes,
+    endNodes,
+    endExcludedNodes,
+    newNode,
+    props,
+    transform = (n) => n,
+  } = opts
   let inside = false
   let current = []
   let newChildren = []
   for (let node of tree.children ?? []) {
-    if (!inside && startNodes.includes(node)) {
+    if (!inside && startNodes.includes(node) && !startExcludedNodes.includes(node)) {
       if (start.inclusive) {
         current.push(node)
       } else {
@@ -28,7 +38,7 @@ function wrap(tree, opts) {
       }
       inside = true
       startNodes.splice(startNodes.indexOf(node), 1)
-    } else if (inside && endNodes.includes(node)) {
+    } else if (inside && endNodes.includes(node) && !endExcludedNodes.includes(node)) {
       if (end.inclusive) {
         current.push(node)
       }
@@ -39,7 +49,7 @@ function wrap(tree, opts) {
           children: current,
         })
       )
-      if (!end.inclusive && startNodes.includes(node)) {
+      if (!end.inclusive && startNodes.includes(node) && !startExcludedNodes.includes(node)) {
         if (start.inclusive) {
           current = [node]
         } else {
@@ -88,13 +98,18 @@ export function remarkRehypeWrap(...rules) {
       end.inclusive = end.inclusive ?? false
 
       let startNodes = selectAll(start.selector, tree)
+      let startExcludedNodes = start.exclude ? selectAll(start.exclude, tree) : []
+
       let endNodes = selectAll(end.selector, tree)
+      let endExcludedNodes = end.exclude ? selectAll(end.exclude, tree) : []
 
       wrap(tree, {
         start,
         end,
         startNodes,
+        startExcludedNodes,
         endNodes,
+        endExcludedNodes,
         newNode: rule.node,
         props: rule.props,
         transform: rule.transform,
